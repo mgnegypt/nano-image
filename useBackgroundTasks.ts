@@ -41,7 +41,18 @@ export function useBackgroundTasks() {
   }, [tasks]);
 
   // Check task status
-  const pendingTask = tasks.find(t => t.status === "pending" || t.status === "processing");
+  const pendingTask = tasks.find(
+    t =>
+      (t.status === "pending" || t.status === "processing") &&
+      !t.resultUrl &&
+      !t.errorMessage
+  );
+    t =>
+      (t.status === "pending" || t.status === "processing") &&
+      !t.resultUrl &&
+      !t.errorMessage
+  );
+
   const { data: taskStatusData } = trpc.images.checkStatus.useQuery(
     { taskId: pendingTask?.taskId || "" },
     {
